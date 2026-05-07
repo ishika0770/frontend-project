@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Login to StudyFlow - Your Academic Hub">
+    <title>Login - StudyFlow</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .login-wrapper {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background: linear-gradient(160deg, hsl(225, 30%, 8%) 0%, #000 60%);
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 440px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 48px 36px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(135deg, hsl(265, 85%, 65%), hsl(210, 90%, 55%));
+        }
+
+        .login-logo {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .login-logo-icon {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .login-logo-text {
+            font-family: var(--font-heading);
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -.02em;
+        }
+
+        .login-subtitle {
+            color: var(--text-secondary);
+            font-size: .9rem;
+            text-align: center;
+            margin-top: 4px;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: .8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            color: var(--text-muted);
+        }
+
+        .login-input {
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 12px 16px;
+            color: var(--text-primary);
+            font-size: .95rem;
+            font-family: var(--font-body);
+            transition: border-color .25s var(--ease), box-shadow .25s var(--ease);
+        }
+
+        .login-input::placeholder {
+            color: var(--text-secondary);
+            opacity: 0.6;
+        }
+
+        .login-input:focus {
+            outline: none;
+            border-color: var(--violet);
+            box-shadow: 0 0 0 3px hsla(265, 85%, 65%, .2);
+        }
+
+        .login-btn {
+            padding: 14px 24px;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: .95rem;
+            font-weight: 700;
+            font-family: var(--font-heading);
+            letter-spacing: .02em;
+            color: #fff;
+            background: linear-gradient(135deg, hsl(265, 85%, 65%), hsl(210, 90%, 55%));
+            cursor: pointer;
+            transition: transform .2s var(--ease), box-shadow .2s var(--ease);
+            margin-top: 4px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px hsla(265, 85%, 65%, .35);
+        }
+
+        .login-btn:active { transform: translateY(0); }
+
+        .login-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .auth-alert {
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            font-size: .85rem;
+            font-weight: 500;
+            text-align: center;
+            display: none;
+            animation: alertSlide .35s var(--ease);
+        }
+
+        .auth-alert.show { display: block; }
+
+        .auth-alert.error {
+            background: hsla(340, 80%, 62%, .12);
+            color: var(--rose);
+            border: 1px solid hsla(340, 80%, 62%, .25);
+        }
+
+        .auth-alert.success {
+            background: hsla(160, 70%, 48%, .12);
+            color: var(--emerald);
+            border: 1px solid hsla(160, 70%, 48%, .25);
+        }
+
+        @keyframes alertSlide {
+            from { opacity: 0; transform: translateY(-8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-footer {
+            text-align: center;
+            margin-top: 28px;
+            font-size: .8rem;
+            color: var(--text-muted);
+        }
+
+        .login-note {
+            text-align: center;
+            font-size: .78rem;
+            color: var(--text-muted);
+            margin-top: 16px;
+            line-height: 1.5;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin .6s linear infinite;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 480px) {
+            .login-card { padding: 36px 24px 32px; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-wrapper">
+        <div class="login-card">
+
+            <div class="login-logo">
+                <span class="login-logo-icon">📚</span>
+                <span class="login-logo-text">StudyFlow</span>
+                <p class="login-subtitle">Sign in with your Chitkara University credentials</p>
+            </div>
+
+            <div class="auth-alert" id="auth-alert"></div>
+
+            <form class="login-form" id="auth-form" novalidate>
+                <div class="form-group">
+                    <label for="roll-number">Roll Number</label>
+                    <input type="text" id="roll-number" class="login-input" placeholder="e.g. 2510990XXX" required
+                        autocomplete="username">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="login-input" placeholder="Your university password"
+                        required autocomplete="current-password">
+                </div>
+
+                <button type="submit" class="login-btn" id="auth-btn">Sign In →</button>
+            </form>
+
+            <p class="login-note">Uses the same login as your Chitkara University portal</p>
+            <p class="login-footer">&copy; 2026 StudyFlow</p>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+    <script>
+        if (AUTH.isLoggedIn()) {
+            window.location.href = 'index.html';
+        }
+
+        const authForm = document.getElementById('auth-form');
+        const authBtn = document.getElementById('auth-btn');
+        const authAlert = document.getElementById('auth-alert');
+
+        authForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            hideAlert();
+
+            const username = document.getElementById('roll-number').value.trim();
+            const password = document.getElementById('password').value;
+
+            if (!username || !password) {
+                showAlert('Please fill in all fields.', 'error');
+                return;
+            }
+
+            authBtn.disabled = true;
+            authBtn.innerHTML = '<span class="spinner"></span> Signing in…';
+
+            const result = await AUTH.signIn({ username, password });
+
+            if (result.ok) {
+                showAlert(result.message, 'success');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 800);
+            } else {
+                showAlert(result.message, 'error');
+                authBtn.disabled = false;
+                authBtn.textContent = 'Sign In →';
+            }
+        });
+
+        function showAlert(msg, type) {
+            authAlert.textContent = msg;
+            authAlert.className = 'auth-alert show ' + type;
+        }
+
+        function hideAlert() {
+            authAlert.className = 'auth-alert';
+        }
+    </script>
+</body>
+
+</html>
